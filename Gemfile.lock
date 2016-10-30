@@ -1,0 +1,29 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    coderay (1.1.1)
+    coolline (0.5.0)
+      unicode_utils (~> 1.4)
+    exif (1.0.1)
+    haversine (0.3.2)
+    method_source (0.8.2)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry-coolline (0.2.5)
+      coolline (~> 0.5)
+    slop (3.6.0)
+    unicode_utils (1.4.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  exif (= 1.0.1)
+  haversine
+  pry
+  pry-coolline
+
+BUNDLED WITH
+   1.13.6
