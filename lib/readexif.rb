@@ -38,7 +38,17 @@ def distances(peaks, exif)
   end
 end
 
-puts "Closest 3 munros"
-distances(load_peaks(peaks_csv || "./munros.csv"), Exif::Data.new(img)).sort_by {|x| x["distance"] }.take(3).each do |hill|
-  puts "  #{hill['hillname']} (#{hill['distance'].to_km} km)"
+def load_and_validate_image(img)
+  exif = Exif::Data.new(img)
+  return nil if !exif[:gps_latitude] || !exif[:gps_longitude]
+  exif
+end
+
+if exif = load_and_validate_image(img)
+  puts "Closest 3 munros"
+  distances(load_peaks(peaks_csv || "./munros.csv"), exif).sort_by {|x| x["distance"] }.take(3).each do |hill|
+    puts "  #{hill['hillname']} (#{hill['distance'].to_km} km)"
+  end
+else
+  puts "Sorry, there was no GPS data associated with that picture"  
 end
