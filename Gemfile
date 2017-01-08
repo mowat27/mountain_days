@@ -1,7 +1,7 @@
 # A sample Gemfile
 source "https://rubygems.org"
 
-gem "exif", "1.0.1"
+gem "exif"
 gem "haversine"
 
 group :development do

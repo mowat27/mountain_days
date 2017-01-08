@@ -20,7 +20,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  exif (= 1.0.1)
+  exif
   haversine
   pry
   pry-coolline
