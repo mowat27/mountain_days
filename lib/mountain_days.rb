@@ -13,19 +13,14 @@ module MountainDays
     end
   end
 
-  def distances(peaks, exif)
-    img_loc = [exif[:gps_latitude], exif[:gps_longitude] * -1]
-
+  def distances_from_lat_long(peaks, lat_long)
     peaks.reduce([]) do |arr, peak|
       peak_loc = [peak["latitude"], peak["longitude"]].map(&:to_f)
-      arr << {
-        "hillname" => peak["hillname"],
-        "hill_lat_long" => peak_loc,
-        "image_lat_long" => img_loc,
-        "distance" => Haversine.distance(img_loc, peak_loc),
-        "hill" => peak,
-        "exif" => exif
-      }
+      arr << peak.merge(
+        "from_lat_long" => lat_long,
+        "to_lat_long" => peak_loc,
+        "distance" => Haversine.distance(lat_long, peak_loc)
+      )
     end
   end
 
