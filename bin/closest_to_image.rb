@@ -7,7 +7,7 @@ if ARGV.length < 1
   exit 1
 end
 
-require_relative 'mountain_days'
+require_relative '../lib/mountain_days'
 include MountainDays
 
 img, peaks_csv = ARGV[0], ARGV[1]
