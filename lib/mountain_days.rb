@@ -1,7 +1,7 @@
 require 'exif'
 require 'csv'
 require 'haversine'
-require 'bigdecimal'
+require_relative 'google_driving_distances'
 
 module MountainDays
   def load_peaks(ifile)
@@ -12,6 +12,8 @@ module MountainDays
       res << Hash[headers.zip(row)]
     end
   end
+
+  alias :load_csv :load_peaks
 
   def distances_from_lat_long(peaks, lat_long)
     peaks.reduce([]) do |arr, peak|
@@ -24,9 +26,21 @@ module MountainDays
     end
   end
 
+
+
   def load_and_validate_image(img)
     exif = Exif::Data.new(img)
     return nil if !exif[:gps_latitude] || !exif[:gps_longitude]
     exif
+  end
+
+  module Journeys
+    def self.direct_distance(from, to)
+      Haversine.distance(from.lat_long, to.lat_long)
+    end
+
+    def self.road_journey(from, to)
+      Struct.new(:in_miles).new(-1)
+    end
   end
 end
