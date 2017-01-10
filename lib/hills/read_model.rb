@@ -8,20 +8,20 @@ module Hills
       @hills.values
     end
 
-    def[](id)
-      @hills[id]
+    def[](hillnumber)
+      @hills[hillnumber]
     end
 
     def load_event(event_name, payload)
-      id = payload[:id]
+      hillnumber = payload[:hillnumber]
 
       case(event_name)
       when :new_munro_added
-        @hills[id] = Hill.new(payload)
+        @hills[hillnumber] = Hill.new(payload)
       when :summit_added
-        self[id].add_summit(payload[:latitude], payload[:longitude])
+        self[hillnumber].add_summit(payload[:latitude], payload[:longitude])
       when :starting_point_added
-        self[id].add_starting_point(payload[:name], payload[:latitude], payload[:longitude])
+        self[hillnumber].add_starting_point(payload[:name], payload[:latitude], payload[:longitude])
       else
         raise EventNotFoundException.new(event_name, payload)
       end
@@ -31,29 +31,41 @@ module Hills
   class Hill
     attr_reader :starting_points, :summit
 
-    def initialize(id:, name:)
-      @hill = {id: id, name: name}
+    def initialize(hillnumber:, name:)
+      @hill = {hillnumber: hillnumber, name: name}
       @starting_points = []
     end
 
-    def add_starting_point(name, latitude, longitude)
-      @starting_points << Location.new(name, latitude, longitude)
+    def hillnumber
+      @hill[:hillnumber]
     end
 
-    def add_summit(latitude, longitude)
-      @summit = Location.new("summit", latitude, longitude)
+    def name
+      @hill[:name]
     end
 
     def[](key)
       @hill[key.to_sym]
     end
 
-    def[]=(key, value)
-      @hill[key] = value
+    def best_guess_driving_destination
+      starting_points.first || summit
+    end
+
+    def add_summit(latitude, longitude)
+      @summit = Location.new("summit", latitude, longitude)
+    end
+
+    def add_starting_point(name, latitude, longitude)
+      @starting_points << Location.new(name, latitude, longitude)
     end
   end
 
-  class Location < Struct.new(:name, :latitude, :longitude); end
+  class Location < Struct.new(:name, :latitude, :longitude)
+    def lat_long
+      [latitude.to_f, longitude.to_f]
+    end
+  end
 
   class EventNotFoundException < Exception
     attr_reader :event_name, :payload

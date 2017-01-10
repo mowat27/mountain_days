@@ -26,8 +26,6 @@ module MountainDays
     end
   end
 
-
-
   def load_and_validate_image(img)
     exif = Exif::Data.new(img)
     return nil if !exif[:gps_latitude] || !exif[:gps_longitude]
