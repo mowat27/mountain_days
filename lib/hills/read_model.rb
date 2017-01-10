@@ -1,13 +1,15 @@
 module Hills
   class ReadModel
-    attr_reader :hills
-
     def initialize
-      @hills = []
+      @hills = {}
+    end
+
+    def hills
+      @hills.values
     end
 
     def[](id)
-      @hills.find { |hill| hill[:id] == id }
+      @hills[id]
     end
 
     def load_event(event_name, payload)
@@ -15,19 +17,19 @@ module Hills
 
       case(event_name)
       when :new_munro_added
-        @hills << Hill.new(payload)
-      when :summit_latitude_added
-        self[id][:summit_latitude] = payload[:value]
-      when :summit_longitude_added
-        self[id][:summit_longitude] = payload[:value]
+        @hills[id] = Hill.new(payload)
+      when :summit_added
+        self[id].add_summit(payload[:latitude], payload[:longitude])
       when :starting_point_added
         self[id].add_starting_point(payload[:name], payload[:latitude], payload[:longitude])
+      else
+        raise EventNotFoundException.new(event_name, payload)
       end
     end
   end
 
   class Hill
-    attr_reader :starting_points
+    attr_reader :starting_points, :summit
 
     def initialize(id:, name:)
       @hill = {id: id, name: name}
@@ -36,6 +38,10 @@ module Hills
 
     def add_starting_point(name, latitude, longitude)
       @starting_points << Location.new(name, latitude, longitude)
+    end
+
+    def add_summit(latitude, longitude)
+      @summit = Location.new("summit", latitude, longitude)
     end
 
     def[](key)
@@ -47,20 +53,17 @@ module Hills
     end
   end
 
-  class Location
-    def initialize(name, latitude, longitude)
-      @name, @latitude, @longitude = name, latitude, longitude
+  class Location < Struct.new(:name, :latitude, :longitude); end
+
+  class EventNotFoundException < Exception
+    attr_reader :event_name, :payload
+
+    def initialize(event_name, payload)
+      @event_name, @payload = event_name, payload
     end
 
-    def[](key)
-      case key
-      when "name"
-        @name
-      when "latitude"
-        @latitude
-      when "longitude"
-        @longitude
-      end
+    def message
+      "Unknown event #{event_name}"
     end
   end
 end

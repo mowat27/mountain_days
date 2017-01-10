@@ -6,6 +6,16 @@ class HillsReadModelTest < Minitest::Test
     @read_model = Hills::ReadModel.new
   end
 
+  def test_invalid_event_throws_error
+    e = assert_raises(Hills::EventNotFoundException) {
+      @read_model.load_event(:foo_event, with: "a payload")
+    }
+
+    assert_match /foo_event/, e.message
+    assert_equal :foo_event, e.event_name
+    assert_equal({with: "a payload"}, e.payload)
+  end
+
   def test_new_munro_added_creates_munro
     @read_model.load_event(:new_munro_added, id: "1", name: "Ben Vane")
     @read_model.load_event(:new_munro_added, id: "3", name: "Sgurr Fiona")
@@ -20,16 +30,16 @@ class HillsReadModelTest < Minitest::Test
     assert_equal("Ben Chronzie", @read_model.hills[2]["name"])
   end
 
-  def test_adding_a_summit_latitude_and_longitude
+  def test_adding_a_summit
     @read_model.load_event(:new_munro_added, id: "1", name: "Ben Vane")
     @read_model.load_event(:new_munro_added, id: "3", name: "Sgurr Fiona")
-    @read_model.load_event(:summit_latitude_added, id: "1", value: 1.23)
-    @read_model.load_event(:summit_longitude_added, id: "1", value: 4.56)
+    @read_model.load_event(:summit_added, id: "1", latitude: 1.23, longitude: 4.56)
 
-    assert_equal(1.23, @read_model["1"]["summit_latitude"])
-    assert_equal(4.56, @read_model["1"]["summit_longitude"])
-    assert_nil(@read_model["3"]["summit_latitude"])
-    assert_nil(@read_model["3"]["summit_longitude"])
+    assert_equal("summit", @read_model["1"].summit["name"])
+    assert_equal(1.23, @read_model["1"].summit["latitude"])
+    assert_equal(4.56, @read_model["1"].summit["longitude"])
+
+    assert_nil(@read_model["3"].summit)
   end
 
   def test_adding_a_starting_point
