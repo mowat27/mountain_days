@@ -4,14 +4,12 @@ require 'google_directions'
 require 'csv'
 require 'open-uri'
 require_relative '../lib/mountain_days'
+require_relative '../lib/http_client'
+
 
 include MountainDays
 
-read_model = ReadModel.hydrate(
-  hills: App::FILES.munros,
-  locations: App::FILES.locations,
-  starting_points: App::FILES.starting_points,
-)
+client = HttpClient.new(base_url: "http://localhost:9292")
 
 journey_origin = Location.new("Buckingham St, Glasgow, G12 8DJ", 55.8776447,-4.288019099999929)
 compute_road_distances = false
@@ -28,7 +26,8 @@ CSV($stdout) { |out| out << %w(
     road_distance
     google_status
 ) }
-read_model.hills.each do |hill|
+
+client.hills.each do |hill|
   drive_to = hill.best_guess_driving_destination
   by_road = compute_road_distances ? Journeys::road_journey(journey_origin, drive_to) : Journeys::not_computed
 

@@ -15,6 +15,12 @@ module MountainDays
       read_model
     end
 
+    def to_h
+      hills.reduce([]) do |arr, hill|
+        arr << hill.to_h
+      end
+    end
+
     def initialize
       @hills = {}
     end
@@ -51,6 +57,13 @@ module MountainDays
       @starting_points = []
     end
 
+    def to_h
+      @hill.merge(
+        summit: @summit ? @summit.to_h : {},
+        starting_points: @starting_points.map(&:to_h)
+      )
+    end
+
     def hillnumber
       @hill[:hillnumber]
     end
@@ -79,6 +92,14 @@ module MountainDays
   class Location < Struct.new(:name, :latitude, :longitude)
     def lat_long
       [latitude.to_f, longitude.to_f]
+    end
+
+    def to_h
+      {
+        name: name,
+        latitude: latitude,
+        longitude: longitude
+      }
     end
   end
 
