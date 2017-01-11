@@ -26,7 +26,7 @@ module MountainDays
       end
     end
 
-    ROOT = File.expand_path("#{File.dirname($PROGRAM_NAME)}/..")
+    ROOT = File.expand_path("#{File.dirname(__FILE__)}/..")
     DATA = File.join(ROOT, "data")
     FILES = OpenStruct.new(
       munros: InputFile.new(:csv, "#{DATA}/munros.csv"),
