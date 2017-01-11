@@ -1,17 +1,19 @@
-require 'minitest/autorun'
-require 'hills/read_model'
+require 'test_helper'
+require 'read_model'
 
 class HillsReadModelTest < Minitest::Test
+  include MountainDays
+
   def setup
-    @read_model = Hills::ReadModel.new
+    @read_model = ReadModel.new
   end
 
   def test_invalhillnumber_event_throws_error
-    e = assert_raises(Hills::EventNotFoundException) {
+    e = assert_raises(EventNotFoundException) {
       @read_model.load_event(:foo_event, with: "a payload")
     }
 
-    assert_match /foo_event/, e.message
+    assert_match(/foo_event/, e.message)
     assert_equal :foo_event, e.event_name
     assert_equal({with: "a payload"}, e.payload)
   end
@@ -57,6 +59,6 @@ class HillsReadModelTest < Minitest::Test
     assert_equal 1, @read_model["3"].starting_points.count
     assert_equal "car park", @read_model["3"].starting_points.first["name"]
     assert_equal 4.567, @read_model["3"].starting_points.first["latitude"]
-    assert_equal -1.432, @read_model["3"].starting_points.first["longitude"]
+    assert_equal(-1.432, @read_model["3"].starting_points.first["longitude"])
   end
 end

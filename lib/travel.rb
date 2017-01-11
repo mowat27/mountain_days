@@ -76,4 +76,16 @@ module MountainDays
       NullJourney.new("NOT COMPUTED")
     end
   end
+
+  module Journeys
+    extend MountainDays::RoadDistances
+
+    def self.direct_distance(from, to)
+      Haversine.distance(from.lat_long, to.lat_long)
+    end
+
+    def self.road_journey(from, to)
+      journey open(url(from.lat_long, to.lat_long)).read
+    end
+  end
 end

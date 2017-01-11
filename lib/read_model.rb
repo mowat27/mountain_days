@@ -1,7 +1,7 @@
-module Hills
+module MountainDays
   class ReadModel
     def self.hydrate(hills:, starting_points:, locations:)
-      read_model = Hills::ReadModel.new
+      read_model = ReadModel.new
 
       hills.to_a.each do |peak|
         read_model.load_event(:new_munro_added, hillnumber: peak["hillnumber"], name: peak["hillname"])

@@ -1,6 +1,7 @@
 # A sample Gemfile
 source "https://rubygems.org"
 
+gem "rake"
 gem "exif"
 gem "haversine"
 gem "google_directions"
@@ -12,4 +13,5 @@ end
 
 group :test do
   gem 'minitest'
+  gem 'minitest-rg'
 end

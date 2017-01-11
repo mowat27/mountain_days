@@ -1,11 +1,11 @@
-require "minitest/autorun"
-require "google_driving_distances"
+require 'test_helper'
+require "travel"
 
 class TestGoogleDrivingDistances < Minitest::Test
   include MountainDays::RoadDistances
 
   def setup
-    @raw_xml = File.read(File.dirname($0) + "/data/buckingham_st_to_slioch.xml")
+    @raw_xml = File.read(File.dirname(__FILE__) + "/data/buckingham_st_to_slioch.xml")
   end
 
   def test_reponse_is_valid

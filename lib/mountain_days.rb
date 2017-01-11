@@ -2,7 +2,8 @@ require 'csv'
 require 'ostruct'
 require 'haversine'
 
-require_relative 'google_driving_distances'
+require_relative 'travel'
+require_relative 'read_model'
 
 module MountainDays
   module App
@@ -32,17 +33,5 @@ module MountainDays
       starting_points: InputFile.new(:csv, "#{DATA}/starting_points.csv"),
       locations: InputFile.new(:csv, "#{DATA}/locations.csv"),
     )
-  end
-
-  module Journeys
-    extend MountainDays::RoadDistances
-
-    def self.direct_distance(from, to)
-      Haversine.distance(from.lat_long, to.lat_long)
-    end
-
-    def self.road_journey(from, to)
-      journey open(url(from.lat_long, to.lat_long)).read
-    end
   end
 end

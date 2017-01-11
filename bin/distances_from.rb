@@ -4,17 +4,16 @@ require 'google_directions'
 require 'csv'
 require 'open-uri'
 require_relative '../lib/mountain_days'
-require_relative '../lib/hills/read_model'
 
 include MountainDays
 
-read_model = Hills::ReadModel.hydrate(
+read_model = ReadModel.hydrate(
   hills: App::FILES.munros,
   locations: App::FILES.locations,
   starting_points: App::FILES.starting_points,
 )
 
-journey_origin = Hills::Location.new("Buckingham St, Glasgow, G12 8DJ", 55.8776447,-4.288019099999929)
+journey_origin = Location.new("Buckingham St, Glasgow, G12 8DJ", 55.8776447,-4.288019099999929)
 compute_road_distances = false
 
 CSV($stdout) { |out| out << %w(
