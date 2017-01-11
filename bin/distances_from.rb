@@ -9,7 +9,7 @@ require_relative '../lib/hills/read_model'
 include MountainDays
 
 read_model = Hills::ReadModel.hydrate(
-  munros: App::FILES.munros,
+  hills: App::FILES.munros,
   locations: App::FILES.locations,
   starting_points: App::FILES.starting_points,
 )
