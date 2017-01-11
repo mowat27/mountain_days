@@ -19,10 +19,7 @@ module MountainDays
       def load_csv(ifile)
         csv = CSV.read(ifile, encoding: "ISO8859-1")
         headers, rows = csv.shift.map {|hdr| hdr.strip}, csv
-
-        peaks = rows.reduce([]) do |res, row|
-          res << Hash[headers.zip(row)]
-        end
+        rows.reduce([]) { |res, row| res << Hash[headers.zip(row)] }
       end
     end
 

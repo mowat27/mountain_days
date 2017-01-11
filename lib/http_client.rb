@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'json'
+require 'ostruct'
 require_relative '../lib/read_model'
 
 module MountainDays
@@ -14,30 +15,27 @@ module MountainDays
 
     private
     def open_page(rel_loc)
-      JSON.parse open("#{@base_url}/#{rel_loc}").read
+      JSON.parse(open("#{@base_url}/#{rel_loc}").read, object_class: OpenStruct)
     end
   end
 
   class HillProxy
-    attr_reader :hillnumber, :name
+    def initialize(hill)
+      @hill = hill
+    end
 
-    def initialize(hash)
-      @hash = hash
-      @hillnumber = hash["hillnumber"]
-      @name = hash["name"]
+    def respond_to?(mth)
+      return true if super(mth.to_sym)
+      @hill.respond_to?(mth.to_sym)
+    end
+
+    def method_missing(mth, *args)
+      @hill.respond_to?(mth) ? @hill.send(mth, *args) : super(mth, *args)
     end
 
     def best_guess_driving_destination
-      if !@hash["starting_points"].empty?
-        name = @hash["starting_points"].first["name"]
-        latitude = @hash["starting_points"].first["latitude"]
-        longitude = @hash["starting_points"].first["longitude"]
-      else
-        name = @hash["summit"]["name"]
-        latitude = @hash["summit"]["latitude"]
-        longitude = @hash["summit"]["longitude"]
-      end
-      Location.new(name, latitude, longitude)
+      dest = @hill.starting_points.empty? ? @hill.summit : @hill.starting_points.first
+      Location.new(dest.name, dest.latitude, dest.longitude)
     end
   end
 end
