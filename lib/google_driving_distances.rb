@@ -15,6 +15,7 @@ module MountainDays
     end
 
     class Journey
+
       def initialize(xml)
         @doc = Nokogiri::XML(xml)
       end
@@ -34,6 +35,18 @@ module MountainDays
 
       def duration_in_seconds
         @doc.xpath("/DirectionsResponse/route/leg/duration").text.to_i
+      end
+    end
+
+    class NullJourney < Journey
+      attr_reader :status
+
+      def initialize(status)
+        @status = status
+      end
+
+      def distance
+        Distance.new(0)
       end
     end
 
@@ -57,6 +70,10 @@ module MountainDays
 
     def journey(xml)
       Journey.new(xml)
+    end
+
+    def not_computed
+      NullJourney.new("NOT COMPUTED")
     end
   end
 end

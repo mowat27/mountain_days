@@ -1,5 +1,20 @@
 module Hills
   class ReadModel
+    def self.hydrate(hills:, starting_points:, locations:)
+      read_model = Hills::ReadModel.new
+
+      hills.to_a.each do |peak|
+        read_model.load_event(:new_munro_added, hillnumber: peak["hillnumber"], name: peak["hillname"])
+        read_model.load_event(:summit_added, hillnumber: peak["hillnumber"], latitude: peak["latitude"], longitude: peak["longitude"])
+      end
+
+      starting_points.to_a.each do |starting_point|
+        read_model.load_event(:starting_point_added, hillnumber: starting_point["hillnumber"], name: "start", latitude: starting_point["latitude"], longitude: starting_point["longitude"])
+      end
+
+      read_model
+    end
+
     def initialize
       @hills = {}
     end

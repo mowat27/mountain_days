@@ -1,19 +1,38 @@
 require 'exif'
 require 'csv'
 require 'haversine'
+require 'ostruct'
 require_relative 'google_driving_distances'
 
 module MountainDays
-  def load_peaks(ifile)
-    csv = CSV.read(ifile, encoding: "ISO8859-1")
-    headers, rows = csv.shift.map {|hdr| hdr.strip}, csv
+  module App
+    class InputFile < Struct.new(:type, :path)
+      def to_a
+        if type.to_s == "csv"
+          load_csv(path)
+        else
+          raise "Cannot load a file of type '#{type}'"
+        end
+      end
 
-    peaks = rows.reduce([]) do |res, row|
-      res << Hash[headers.zip(row)]
+      def load_csv(ifile)
+        csv = CSV.read(ifile, encoding: "ISO8859-1")
+        headers, rows = csv.shift.map {|hdr| hdr.strip}, csv
+
+        peaks = rows.reduce([]) do |res, row|
+          res << Hash[headers.zip(row)]
+        end
+      end
     end
-  end
 
-  alias :load_csv :load_peaks
+    ROOT = File.expand_path("#{File.dirname($PROGRAM_NAME)}/..")
+    DATA = File.join(ROOT, "data")
+    FILES = OpenStruct.new(
+      munros: InputFile.new(:csv, "#{DATA}/munros.csv"),
+      starting_points: InputFile.new(:csv, "#{DATA}/starting_points.csv"),
+      locations: InputFile.new(:csv, "#{DATA}/locations.csv"),
+    )
+  end
 
   def distances_from_lat_long(peaks, lat_long)
     peaks.reduce([]) do |arr, peak|
