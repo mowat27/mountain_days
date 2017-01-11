@@ -5,16 +5,11 @@ GEM
     coolline (0.5.0)
       unicode_utils (~> 1.4)
     exif (1.0.1)
-    google_directions (0.1.6.2)
-      nokogiri (>= 1.4.1)
     haversine (0.3.2)
     method_source (0.8.2)
-    mini_portile2 (2.1.0)
     minitest (5.8.3)
     minitest-rg (5.2.0)
       minitest (~> 5.0)
-    nokogiri (1.7.0.1)
-      mini_portile2 (~> 2.1.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -30,7 +25,6 @@ PLATFORMS
 
 DEPENDENCIES
   exif
-  google_directions
   haversine
   minitest
   minitest-rg

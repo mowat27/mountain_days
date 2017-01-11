@@ -4,7 +4,6 @@ source "https://rubygems.org"
 gem "rake"
 gem "exif"
 gem "haversine"
-gem "google_directions"
 
 group :development do
   gem "pry"
