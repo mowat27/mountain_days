@@ -27,12 +27,31 @@ module MountainDays
         status == "OK"
       end
 
-      def distance_in_metres
-        @doc.xpath("/DirectionsResponse/route/leg/distance/value").text.to_i
+      def distance
+        node = @doc.xpath("/DirectionsResponse/route/leg/distance/value")
+        Distance.new(node.text.to_i)
       end
 
       def duration_in_seconds
         @doc.xpath("/DirectionsResponse/route/leg/duration").text.to_i
+      end
+    end
+
+    class Distance
+      def initialize(metres)
+        @metres = metres
+      end
+
+      def to_metres
+        @metres
+      end
+
+      def to_kilometres
+        @metres * 0.0001
+      end
+
+      def to_miles
+        @metres * 0.000621371
       end
     end
 

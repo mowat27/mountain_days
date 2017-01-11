@@ -37,9 +37,11 @@ CSV($stdout) { |out| out << %w(
     destination_longitude
     direct_distance
     road_distance
+    google_status
 ) }
 read_model.hills.each do |hill|
   drive_to = hill.best_guess_driving_destination
+  by_road = Journeys::road_journey(home, drive_to)
 
   CSV($stdout) {|out| out << [
     hill.name,
@@ -50,6 +52,7 @@ read_model.hills.each do |hill|
     drive_to.latitude,
     drive_to.longitude,
     Journeys::direct_distance(home, drive_to).to_miles.round,
-    Journeys::road_journey(home, drive_to).in_miles
+    by_road.distance.to_miles.round,
+    by_road.status
   ]}
 end

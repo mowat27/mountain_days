@@ -23,7 +23,9 @@ class TestGoogleDrivingDistances < Minitest::Test
 
   def test_finding_driving_distance_in_metres
     journey = journey(@raw_xml)
-    assert_equal(357186, journey.distance_in_metres)
+    assert_equal(357186, journey.distance.to_metres)
+    assert_equal(35.7186, journey.distance.to_kilometres)
+    assert_equal(221.9450, journey.distance.to_miles.round(4))
   end
 
   def test_finding_driving_duration_in_seconds
