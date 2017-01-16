@@ -1,0 +1,44 @@
+---
+- hosts: all
+  become: false
+  tasks:
+    - name: Install homebrew cask dependencies
+      homebrew_cask: name={{item}} state=present
+      with_items:
+        - virtualbox
+        - vagrant
+    - name: Install homebrew dependencies
+      homebrew: name={{item}} state=present
+      with_items:
+        - dnsmasq
+
+- hosts: all
+  become: true
+  tasks:
+    - name: Create /etc/resolver
+      file:
+        path: /etc/resolver
+        state: directory
+
+    - name: Add *.dev resolver
+      lineinfile:
+        state: present
+        line: nameserver 127.0.0.1
+        create: yes
+        dest: /etc/resolver/dev
+        owner: root
+        group: wheel
+
+    - name: Resolve *.dev to localhost
+      lineinfile:
+        state: present
+        line: address=/.dev/127.0.0.1
+        create: yes
+        dest: /usr/local/etc/dnsmasq.conf
+
+- hosts: all
+  become: true
+  tasks:
+    - name: Install pip dependencies
+      pip:
+        name: ansible-container

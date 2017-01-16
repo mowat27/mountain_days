@@ -8,7 +8,8 @@ require_relative '../lib/http_client'
 
 include MountainDays
 
-client = HttpClient.new(base_url: "http://localhost:9292")
+# client = HttpClient.new(base_url: "http://localhost:9292")
+client = HttpClient.new(base_url: "http://mountaindays.dev:9292")
 
 journey_origin = HttpClient::Location.new("Buckingham St, Glasgow, G12 8DJ", 55.8776447,-4.288019099999929)
 compute_road_distances = false

@@ -1,6 +1,5 @@
 require 'csv'
 require 'ostruct'
-require 'haversine'
 
 require_relative 'read_model'
 
