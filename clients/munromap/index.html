@@ -3,7 +3,7 @@
   <head>
     <style>
        #map {
-        height: 700px;
+        height: 800px;
         width: 80%;
        }
     </style>
@@ -18,11 +18,11 @@
         var benVorlich = {lat: 55.8776447, lng: -4.288019099999929};
 
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 7,
-          center: {lat: 57, lng: -4.8}
+          zoom: 8,
+          center: {lat: 57.365, lng: -4.9}
         });
 
-        $.getJSON("http://mountaindays.dev:9292/read-model.json", function(hills) {
+        $.getJSON("http://localhost:9292/read-model.json", function(hills) {
           $(hills).each(function(i, hill) {
             console.log(hill);
             var pos = {lat: parseFloat(hill.summit.latitude), lng: parseFloat(hill.summit.longitude)};
