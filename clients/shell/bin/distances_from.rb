@@ -3,15 +3,14 @@
 require 'google_directions'
 require 'csv'
 require 'open-uri'
-require_relative '../lib/mountain_days'
+require_relative '../lib/travel'
 require_relative '../lib/http_client'
-
 
 include MountainDays
 
 client = HttpClient.new(base_url: "http://localhost:9292")
 
-journey_origin = Location.new("Buckingham St, Glasgow, G12 8DJ", 55.8776447,-4.288019099999929)
+journey_origin = HttpClient::Location.new("Buckingham St, Glasgow, G12 8DJ", 55.8776447,-4.288019099999929)
 compute_road_distances = false
 
 CSV($stdout) { |out| out << %w(

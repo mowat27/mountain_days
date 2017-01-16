@@ -2,6 +2,7 @@ require 'cgi'
 require 'net/http'
 require 'open-uri'
 require 'nokogiri'
+require 'haversine'
 
 module MountainDays
   module RoadDistances

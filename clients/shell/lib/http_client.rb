@@ -1,10 +1,23 @@
 require 'open-uri'
 require 'json'
 require 'ostruct'
-require_relative '../lib/read_model'
 
 module MountainDays
   class HttpClient
+    class Location < Struct.new(:name, :latitude, :longitude)
+      def lat_long
+        [latitude.to_f, longitude.to_f]
+      end
+
+      def to_h
+        {
+          name: name,
+          latitude: latitude,
+          longitude: longitude
+        }
+      end
+    end
+
     def initialize(base_url:)
       @base_url = base_url
     end
@@ -35,7 +48,7 @@ module MountainDays
 
     def best_guess_driving_destination
       dest = @hill.starting_points.empty? ? @hill.summit : @hill.starting_points.first
-      Location.new(dest.name, dest.latitude, dest.longitude)
+      HttpClient::Location.new(dest.name, dest.latitude, dest.longitude)
     end
   end
 end

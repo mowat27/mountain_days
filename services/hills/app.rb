@@ -3,7 +3,7 @@ require 'sinatra/reloader'
 
 require 'json'
 
-require_relative '../lib/mountain_days'
+require_relative 'lib/mountain_days'
 
 class App < Sinatra::Base
   include MountainDays

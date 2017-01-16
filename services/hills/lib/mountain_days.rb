@@ -2,7 +2,6 @@ require 'csv'
 require 'ostruct'
 require 'haversine'
 
-require_relative 'travel'
 require_relative 'read_model'
 
 module MountainDays

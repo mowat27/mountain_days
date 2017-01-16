@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    exif (1.0.1)
+    haversine (0.3.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  exif
+  haversine
+
+BUNDLED WITH
+   1.13.6
