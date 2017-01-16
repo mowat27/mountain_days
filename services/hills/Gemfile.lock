@@ -33,6 +33,7 @@ GEM
       rack-test
       sinatra (~> 1.4.0)
       tilt (>= 1.3, < 3)
+    sinatra-cross_origin (0.4.0)
     sinatra-reloader (1.0)
       sinatra-contrib
     slop (3.6.0)
@@ -49,6 +50,7 @@ DEPENDENCIES
   pry-coolline
   rake
   sinatra
+  sinatra-cross_origin
   sinatra-reloader
 
 BUNDLED WITH

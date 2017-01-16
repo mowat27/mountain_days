@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
+require 'sinatra/cross_origin'
 
 require 'json'
 
@@ -18,6 +19,11 @@ class App < Sinatra::Base
 
   configure :development do
     register Sinatra::Reloader
+
+    register Sinatra::CrossOrigin
+    enable :cross_origin
+    set :allow_methods, [:get]
+
     set :read_model, hydrated_read_model
   end
 

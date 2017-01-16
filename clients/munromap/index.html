@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+       #map {
+        height: 700px;
+        width: 80%;
+       }
+    </style>
+  </head>
+  <body>
+    <h3>Munro Map</h3>
+    <div id="map"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script>
+      function initMap() {
+        var benMore = {lat: 56.385952, lng: -4.540103};
+        var benVorlich = {lat: 55.8776447, lng: -4.288019099999929};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 7,
+          center: {lat: 57, lng: -4.8}
+        });
+
+        $.getJSON("http://mountaindays.dev:9292/read-model.json", function(hills) {
+          $(hills).each(function(i, hill) {
+            console.log(hill);
+            var pos = {lat: parseFloat(hill.summit.latitude), lng: parseFloat(hill.summit.longitude)};
+            new google.maps.Marker({
+              position: pos,
+              map: map
+            });
+          });
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVq4XLYhKGimrVqYGS9ttPPNyJBteFCXo&callback=initMap">
+    </script>
+  </body>
+</html>
