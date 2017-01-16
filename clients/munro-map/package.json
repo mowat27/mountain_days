@@ -1,0 +1,30 @@
+{
+  "name": "munro-map",
+  "description": "Interactive map of the Scottish mountains",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": "https://github.com/mowat27/mountain_days.git",
+  "scripts": {
+    "test": "mocha --opts .mocha.opts",
+    "test:watch": "mocha --opts .mocha.opts --watch",
+    "build": "webpack --config webpack.config.js --progress",
+    "start": "webpack-dev-server --config webpack.config.js --progress --content-base=public",
+    "build:watch": "npm run build -- --watch --progress"
+  },
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "chai": "^3.5.0",
+    "css-loader": "^0.26.1",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.26.0",
+    "mocha": "^3.2.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2",
+    "webpack-notifier": "^1.5.0"
+  }
+}

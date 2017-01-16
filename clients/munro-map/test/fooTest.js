@@ -1,4 +1,4 @@
-import { foo } from '../src/app'
+import { foo } from '../src'
 
 describe("foo", () => {
   it("is null", () => {
