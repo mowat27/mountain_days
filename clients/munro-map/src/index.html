@@ -24,7 +24,7 @@
 
         $.getJSON("http://localhost:9292/read-model.json", function(hills) {
           $(hills).each(function(i, hill) {
-            console.log(hill);
+            // console.log(hill);
             var pos = {lat: parseFloat(hill.summit.latitude), lng: parseFloat(hill.summit.longitude)};
             new google.maps.Marker({
               position: pos,

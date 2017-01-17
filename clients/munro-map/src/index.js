@@ -1,9 +1,16 @@
-import { createStore, combineReducers } from 'redux'
-import { addHill } from './actions'
+import 'babel-polyfill'
+import createLogger from 'redux-logger'
+import thunkMiddleware from 'redux-thunk'
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
+
+import { addHill, fetchHills } from './actions'
 import { hills } from './reducers'
 
-const store = createStore(combineReducers({hills}), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+const rootReducer = combineReducers({hills})
 
-store.dispatch(addHill({name: "First"}))
-store.dispatch(addHill({name: "Second"}))
-store.dispatch(addHill({name: "Third"}))
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, {}, composeEnhancers(
+   applyMiddleware(thunkMiddleware)
+ ));
+
+store.dispatch(fetchHills())
