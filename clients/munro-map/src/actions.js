@@ -26,3 +26,12 @@ export function fetchHills() {
       })
   }
 }
+
+// Hill - user actions
+export const HILL_SELECTED = 'HILL_SELECTED'
+export function hillSelected(hillnumber) {
+  return {
+    type: HILL_SELECTED,
+    hillnumber: hillnumber
+  }
+}

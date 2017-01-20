@@ -7,9 +7,9 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 
 import App  from './components/App'
 import { fetchHills } from './actions'
-import { hills } from './reducers'
+import { hills, selections } from './reducers'
 
-const rootReducer = combineReducers({hills})
+const rootReducer = combineReducers({hills, selections})
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const store = createStore(rootReducer, {}, composeEnhancers(
