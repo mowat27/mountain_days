@@ -6,10 +6,7 @@ class MunroMap extends React.Component {
   summitIcon(google, summit) {
     let redPin = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569'
     let greenPin = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|58D68D'
-
-    return {
-      url: summit.selected ? greenPin : redPin
-    }
+    return summit.selected ? greenPin : redPin
   }
 
   render() {
@@ -39,7 +36,7 @@ class MunroMap extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  let selected = state.selections.selectedHill 
+  let selected = state.selections.selectedHill
   return {
     summits: state.hills.map( (hill) => ({
       hillnumber: hill.hillnumber,
