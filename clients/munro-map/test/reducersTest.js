@@ -4,7 +4,7 @@ import { hills } from '../src/reducers'
 import { selections } from '../src/reducers'
 import { expect } from 'chai'
 
-describe("hills", () => {
+describe("hills reducer", () => {
   it("returns input state when the action is unknown", () => {
     let action = {type: 'FOO'}
     let initialState = []
@@ -31,7 +31,7 @@ describe("hills", () => {
   })
 })
 
-describe("selections", () => {
+describe("selections reducer", () => {
   it("returns input state when the action is unknown", () => {
     let action = {type: 'FOO'}
     let initialState = {}

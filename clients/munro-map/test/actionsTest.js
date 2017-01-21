@@ -3,7 +3,7 @@ import { addHill, ADD_HILL } from '../src/actions'
 import { hillSelected, HILL_SELECTED } from '../src/actions'
 import { expect } from 'chai'
 
-describe("addHill", () => {
+describe("addHill() action creator", () => {
   it("returns an ADD_HILL action", () => {
     let hill = {name: "Some Hill"}
     let expected = {type: ADD_HILL, hill}
@@ -14,7 +14,7 @@ describe("addHill", () => {
   })
 })
 
-describe("hillSelected", () => {
+describe("hillSelected() action creator", () => {
   it("returns a HILL_SELECTED action", () => {
     let hillnumber = "999"
     let expected = {type: HILL_SELECTED, hillnumber: "999"}
