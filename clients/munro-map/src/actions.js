@@ -35,3 +35,11 @@ export function hillSelected(hillnumber) {
     hillnumber: hillnumber
   }
 }
+
+export const DISTANCE_IN_MILES_FILTER_CHANGED = 'DISTANCE_IN_MILES_FILTER_CHANGED'
+export function distanceInMilesFilterChanged(miles) {
+  return {
+    type: DISTANCE_IN_MILES_FILTER_CHANGED,
+    miles: parseInt(miles)
+  }
+}

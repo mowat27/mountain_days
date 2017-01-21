@@ -1,4 +1,4 @@
-import { ADD_HILL, HILL_SELECTED } from '../src/actions'
+import { ADD_HILL, HILL_SELECTED, DISTANCE_IN_MILES_FILTER_CHANGED } from '../src/actions'
 
 export function hills(state = [], action) {
   if(!action) return state
@@ -20,6 +20,30 @@ export function selections(state = {}, action) {
         ...state,
         selectedHill: action.hillnumber
       }
+    default:
+      return state
+  }
+}
+
+export function addFilter(state, newFilter) {
+  let existingElementIndex = state.findIndex(({ name, units }) => (name === "distance" && units === "miles"))
+  return [
+    ...state.slice(0, existingElementIndex),
+    newFilter,
+    ...state.slice(existingElementIndex + 1, state.length)
+  ]
+}
+
+export function filters(state = [], action) {
+  if(!action) return state
+
+  switch(action.type) {
+    case DISTANCE_IN_MILES_FILTER_CHANGED:
+      return addFilter(state, {
+        name: "distance",
+        units: "miles",
+        value: action.miles
+      })
     default:
       return state
   }
