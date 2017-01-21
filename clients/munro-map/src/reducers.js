@@ -25,8 +25,11 @@ export function selections(state = {}, action) {
   }
 }
 
-export function addFilter(state, newFilter) {
-  let existingElementIndex = state.findIndex(({ name, units }) => (name === "distance" && units === "miles"))
+export function setFilter(state, newFilter) {
+  let existingElementIndex = state.findIndex(({ name, units }) => (
+    name === newFilter.name && units === newFilter.units)
+  )
+
   return [
     ...state.slice(0, existingElementIndex),
     newFilter,
@@ -39,7 +42,7 @@ export function filters(state = [], action) {
 
   switch(action.type) {
     case DISTANCE_IN_MILES_FILTER_CHANGED:
-      return addFilter(state, {
+      return setFilter(state, {
         name: "distance",
         units: "miles",
         value: action.miles
