@@ -1,19 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Hill from './Hill'
 
-const Filters = ({hills}) => (
+const Filters = () => (
   <div className='filters'>
-    <ul>
-      { hills.map( hill => <li key={hill.hillnumber}><Hill hill={hill} /></li>) }
-    </ul>
+    <label>Within <input /> miles of G12 8DJ</label>
   </div>
 )
 
-const mapStateToProps = ({hills}) => (
-  {
-    hills: hills.slice(0,5)
-  }
+const mapStateToProps = () => (
+  {}
 )
 
 export default connect(mapStateToProps)(Filters)
