@@ -1,3 +1,12 @@
+munro_map:
+  build: ./clients/munro-map
+  ports:
+    - "8080:8080"
+  volumes:
+    - ./clients/munro-map:/app
+  links:
+    - hills
+
 hills:
   build: ./services/hills
   ports:
