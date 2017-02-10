@@ -1,0 +1,4 @@
+hills:
+  build: ./services/hills
+  ports:
+    - "9292:9292"
