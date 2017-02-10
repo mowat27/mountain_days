@@ -18,7 +18,7 @@ class MunroMap extends React.Component {
       <div className="map-container" style={{width: '100%', height: '80%', position: 'relative'}}>
         <Map
           google={this.props.google}
-          initialCenter={{lat: 57.365, lng: -4.9}}
+          initialCenter={{lat: 57.15, lng: -4.9}}
           zoom={8}>
             {
               this.props.summits.map( summit => (
@@ -38,7 +38,7 @@ class MunroMap extends React.Component {
 const mapStateToProps = ({hills, selections}) => {
   let selected = selections.selectedHill
   return {
-    summits: hills.map( (hill) => ({
+    summits: hills.map(hill => ({
       hillnumber: hill.hillnumber,
       name: hill.hillname,
       position: {lat: hill.summit.latitude, lng: hill.summit.longitude},
